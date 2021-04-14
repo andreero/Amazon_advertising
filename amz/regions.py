@@ -1,0 +1,20 @@
+regions = {'na': {'sandbox': 'advertising-api-test.amazon.com',
+                  'prod': 'advertising-api.amazon.com',
+                  'token_url': 'api.amazon.com/auth/o2/token'},
+           'eu': {'sandbox': 'advertising-api-test.amazon.com',
+                  'prod': 'advertising-api-eu.amazon.com',
+                  'token_url': 'api.amazon.co.uk/auth/o2/token'},
+           'fe': {'sandbox': 'advertising-api-test.amazon.com',
+                  'prod': 'advertising-api-fe.amazon.com',
+                  'token_url': 'api.amazon.co.jp/auth/o2/token'}}
+
+region_codes = {'US': 'na',
+                'CA': 'na',
+                'UK': 'eu',
+                'DE': 'eu',
+                'FR': 'eu',
+                'IT': 'eu',
+                'ES': 'eu',
+                'AE': 'eu',
+                'JP': 'fe',
+                'AU': 'fe'}
