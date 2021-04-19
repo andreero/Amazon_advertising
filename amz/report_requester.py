@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from amz.config import AmazonConfig
+from amz.config import AmazonConfig, MAX_POOL_WORKERS, MAX_REPORT_CREATION_RETRIES, REQUEST_TIMEOUTS_SECONDS
 from amz.advertising_api import AdvertisingApi
 
 from amz.regions import region_codes
@@ -26,7 +26,7 @@ def get_dates_between(start_date, end_date):
     return [start_date + timedelta(i) for i in range(diff.days + 1)]
 
 
-def request_report(api_object, report: Report):
+def request_report(api_object, report: Report, logger):
     if api_object.last_refreshed_access_token <= time.time()-30*60:  # Refresh token if it's more than 30 minutes old
         api_object.do_refresh_token()
 
@@ -35,14 +35,24 @@ def request_report(api_object, report: Report):
         data=report.data,
         campaign_type=report.interface_type)
     report_id = json.loads(response['response'])['reportId']
-    status = 'IN_PROGRESS'
-    for timeout in [5, 15, 15, 30, 30]+[60]*10+[120]*10:
-        if 'status' in response['response']:
-            status = json.loads(response['response'])['status']
+    for timeout in REQUEST_TIMEOUTS_SECONDS:
+        if 'status' not in response['response']:
+            logger.warning(f'No report creation status for report {report.report_type} for date {report.report_date}, '
+                           f'received response: {response}')
+            return
+        status = json.loads(response['response'])['status']
+
+        if status not in ['IN_PROGRESS', 'SUCCESS']:
+            logger.warning(f'Bad report creation status for report {report.report_type} '
+                           f'for date {report.report_date}, received response: {response}')
+            return
+
         if status == 'SUCCESS':
             return report_id
         time.sleep(timeout)
         response = api_object.request_report(report_id=report_id)
+    logger.warning(f'Report {report.report_type} for date {report.report_date} timed out, '
+                   f'last received response was {response}')
 
 
 def save_records_to_db(data_records, report_type, report_date, db_engine, logger, amazon_config):
@@ -67,16 +77,16 @@ def delete_previous_records_from_db(report_type, report_date, db_engine, logger,
         session_maker = sessionmaker()
         session = session_maker(bind=db_engine)
         model = report_types[report_type]['model']
-        logger.info(f'Deleting old records for {report_type} for date {report_date}.')
+        logger.debug(f'Deleting old records for {report_type} for date {report_date}.')
         rows_deleted = session.query(model).filter(
             model.AmzAccount_ID_Internal == amazon_config.AmzAccount_ID_Internal,
             model.ReportDate == report_date.strftime('%Y%m%d')
         ).delete(synchronize_session=False)
         session.commit()
-        logger.debug(f'Deleted {rows_deleted} old records for {report_type} for date {report_date}.')
-        print(f'Deleted {rows_deleted} old records for {report_type} for date {report_date}.')
+        logger.debug(f'Deleted {rows_deleted} old records for {report_type} for date {report_date}')
+        print(f'Deleted {rows_deleted} old records for {report_type} for date {report_date}')
     except Exception:
-        logger.exception(f'Uncaught exception while deleting old records for {report_type} for date {report_date}.')
+        logger.exception(f'Uncaught exception while deleting old records for {report_type} for date {report_date}')
 
 
 def get_valid_profile_ids(api_object, country_codes):
@@ -129,25 +139,31 @@ def create_report_queue(amazon_config):
 def process_report(report: Report, api_object, db_engine, logger, amazon_config):
     logger.info(f'Requesting report type {report.report_type} for date {report.report_date}')
     print(f'Requesting report type {report.report_type} for date {report.report_date}')
-    report_id = request_report(api_object=api_object, report=report)
-    if report_id:
-        response = api_object.get_report(report_id)
-        data_records = response['response']
-        logger.debug(f'Downloaded report {report.report_type} for '
-                     f'date {report.report_date} with {len(data_records)} records')
-        print(f'Downloaded report {report.report_type} for '
-              f'date {report.report_date} with {len(data_records)} records')
-        delete_previous_records_from_db(report_type=report.report_type, report_date=report.report_date,
-                                        db_engine=db_engine, logger=logger, amazon_config=amazon_config)
-        logger.debug(f'Writing report {report.report_type} {report.report_date} to database')
-        save_records_to_db(data_records=data_records, db_engine=db_engine, report_type=report.report_type,
-                           report_date=report.report_date, logger=logger, amazon_config=amazon_config)
+    for retry_number in range(MAX_REPORT_CREATION_RETRIES):
+        report_id = request_report(api_object=api_object, report=report, logger=logger)
+        if report_id:
+            response = api_object.get_report(report_id)
+            data_records = response['response']
+            logger.debug(f'Downloaded report {report.report_type} for '
+                         f'date {report.report_date} with {len(data_records)} records')
+            print(f'Downloaded report {report.report_type} for '
+                  f'date {report.report_date} with {len(data_records)} records')
+            delete_previous_records_from_db(report_type=report.report_type, report_date=report.report_date,
+                                            db_engine=db_engine, logger=logger, amazon_config=amazon_config)
+            logger.debug(f'Writing report {report.report_type} {report.report_date} to database')
+            save_records_to_db(data_records=data_records, db_engine=db_engine, report_type=report.report_type,
+                               report_date=report.report_date, logger=logger, amazon_config=amazon_config)
+            return
+        else:
+            logger.warning(f'Failed to download report {report.report_type} '
+                           f'for date {report.report_date}, retry {retry_number+1}/{MAX_REPORT_CREATION_RETRIES}')
     else:
-        logger.error('Failed to download report')
+        logger.error(f'Failed to download report {report.report_type} '
+                     f'for date {report.report_date} after max retries')
 
 
 def process_report_queue(report_queue, api_object, db_engine, logger, amazon_config):
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=MAX_POOL_WORKERS) as executor:
         partial_function = partial(  # used because map takes only 1 argument, but I also need to pass api_object etc.
             process_report,
             api_object=api_object,

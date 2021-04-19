@@ -2,6 +2,11 @@ from datetime import date, datetime, timedelta
 import dateparser
 
 
+MAX_REPORT_CREATION_RETRIES = 3
+MAX_POOL_WORKERS = 3
+REQUEST_TIMEOUTS_SECONDS = [5, 15, 15, 30, 30]+[60]*30
+
+
 class AmazonConfig():
     @classmethod
     def from_dict(cls, config_dict):
