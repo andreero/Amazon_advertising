@@ -39,12 +39,12 @@ class AmazonConfig():
 
         self.ReportStartDate = dateparser.parse(ReportStartDate, settings={'TIMEZONE': 'UTC'}).date()
         # API will return an error if the report date is more than 60 days in the past
-        safe_amazon_min_date = date.today()-timedelta(days=60)
+        safe_amazon_min_date = datetime.utcnow().date()-timedelta(days=60)
         if self.ReportStartDate < safe_amazon_min_date:
             self.ReportStartDate = safe_amazon_min_date
 
         # Same limitation: API will return an error for future dates
-        safe_amazon_max_date = date.today()
+        safe_amazon_max_date = datetime.utcnow().date()
         if not ReportEndDate or dateparser.parse(ReportEndDate, settings={'TIMEZONE': 'UTC'}).date() > safe_amazon_max_date:
             self.ReportEndDate = safe_amazon_max_date
         else:
