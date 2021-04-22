@@ -8,7 +8,7 @@ class LogMessage(Base):
     __tablename__ = 'amz_adv_scripts_logs'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
 
     Timestamp = Column(DateTime(timezone=True))
@@ -22,15 +22,15 @@ class SponsoredProductsAsinsKeyword(Base):
     __tablename__ = 'amz_adv_sponsored_products_asins_keyword'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
-    KeywordId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
+    KeywordId = Column(String(255))
     KeywordText = Column(Text)
     ASIN = Column(String(255))
     OtherASIN = Column(String(255))
@@ -56,14 +56,14 @@ class SponsoredProductsAsinsTarget(Base):
     __tablename__ = 'amz_adv_sponsored_products_asins_target'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
     ASIN = Column(String(255))
     OtherASIN = Column(String(255))
     SKU = Column(String(255))
@@ -91,15 +91,15 @@ class SponsoredProductsKeyword(Base):
     __tablename__ = 'amz_adv_sponsored_products_keyword'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
-    KeywordId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
+    KeywordId = Column(String(255))
     KeywordText = Column(Text)
     MatchType = Column(String(255))
     Impressions = Column(Float)
@@ -136,14 +136,14 @@ class SponsoredProductsProductAds(Base):
     __tablename__ = 'amz_adv_sponsored_products_product_ads'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
     Impressions = Column(Float)
     Clicks = Column(Float)
     Cost = Column(Float)
@@ -181,12 +181,12 @@ class SponsoredBrand(Base):
     __tablename__ = 'amz_adv_sponsored_brand'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
     CampaignStatus = Column(String(255))
     CampaignBudget = Column(Float)
     CampaignBudgetType = Column(String(255))
@@ -194,8 +194,8 @@ class SponsoredBrand(Base):
     ApplicableBudgetRuleId = Column(String(255))
     ApplicableBudgetRuleName = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
-    KeywordId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
+    KeywordId = Column(String(255))
     KeywordText = Column(Text)
     KeywordBid = Column(Float)
     KeywordStatus = Column(String(255))
@@ -225,21 +225,58 @@ class SponsoredBrand(Base):
     Timestamp = Column(DateTime(timezone=True))
 
 
-class SponsoredDisplay(Base):
-    __tablename__ = 'amz_adv_sponsored_display'
+class SponsoredBrandVideo(Base):
+    __tablename__ = 'amz_adv_sponsored_brand_video'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    AmzAccount_ID_Internal = Column(String(255))
+    AmzAccount_ID_Internal = Column(String(255), index=True)
     AmzAccount_Group = Column(String(255))
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255), index=True)
+    CampaignId = Column(String(255))
+    CampaignStatus = Column(String(255))
+    CampaignBudget = Column(Float)
+    CampaignBudgetType = Column(String(255))
+    CampaignRuleBasedBudget = Column(Float)
+    ApplicableBudgetRuleId = Column(String(255))
+    ApplicableBudgetRuleName = Column(String(255))
     AdGroupName = Column(String(255))
-    AdGroupId = Column(String(255), index=True)
+    AdGroupId = Column(String(255))
+    KeywordId = Column(String(255))
+    KeywordText = Column(Text)
+    KeywordBid = Column(Float)
+    KeywordStatus = Column(String(255))
+    TargetId = Column(String(255))
+    TargetingExpression = Column(String(255))
+    TargetingText = Column(Text)
+    TargetingType = Column(String(255))
+    MatchType = Column(String(255))
+    Impressions = Column(Float)
+    Clicks = Column(Float)
+    Cost = Column(Float)
+    AttributedSales14d = Column(Float)
+    AttributedSales14dSameSKU = Column(Float)
+    AttributedConversions14d = Column(Float)
+    AttributedConversions14dSameSKU = Column(Float)
+    Timestamp = Column(DateTime(timezone=True))
+
+
+class SponsoredDisplay(Base):
+    __tablename__ = 'amz_adv_sponsored_display'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    AmzAccount_ID_Internal = Column(String(255), index=True)
+    AmzAccount_Group = Column(String(255))
+    ReportDate = Column(Date, index=True)
+
+    CampaignName = Column(String(255))
+    CampaignId = Column(String(255))
+    AdGroupName = Column(String(255))
+    AdGroupId = Column(String(255))
     ASIN = Column(String(255))
     SKU = Column(String(255))
-    AdId = Column(String(255), index=True)
+    AdId = Column(String(255))
     Impressions = Column(Float)
     Clicks = Column(Float)
     Cost = Column(Float)

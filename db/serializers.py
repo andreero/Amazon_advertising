@@ -1,6 +1,6 @@
 from datetime import datetime
 from db.models import SponsoredProductsAsinsKeyword, SponsoredProductsAsinsTarget, \
-    SponsoredProductsKeyword, SponsoredProductsProductAds, SponsoredBrand, SponsoredDisplay
+    SponsoredProductsKeyword, SponsoredProductsProductAds, SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay
 
 
 def create_sp_asins_keywords(asins_keyword_dict):
@@ -164,7 +164,6 @@ def create_sponsored_brand(sponsored_brand_dict):
             KeywordBid=sponsored_brand_dict.get('keywordBid'),
             KeywordStatus=sponsored_brand_dict.get('keywordStatus'),
             TargetId=sponsored_brand_dict.get('targetId'),
-            SearchTermImpressionRank=sponsored_brand_dict.get('searchTermImpressionRank'),
             TargetingExpression=sponsored_brand_dict.get('targetingExpression'),
             TargetingText=sponsored_brand_dict.get('targetingText'),
             TargetingType=sponsored_brand_dict.get('targetingType'),
@@ -172,20 +171,54 @@ def create_sponsored_brand(sponsored_brand_dict):
             Impressions=sponsored_brand_dict.get('impressions'),
             Clicks=sponsored_brand_dict.get('clicks'),
             Cost=sponsored_brand_dict.get('cost'),
-            AttributedDetailPageViewsClicks14d=sponsored_brand_dict.get('attributedDetailPageViewsClicks14d'),
             AttributedSales14d=sponsored_brand_dict.get('attributedSales14d'),
             AttributedSales14dSameSKU=sponsored_brand_dict.get('attributedSales14dSameSKU'),
             AttributedConversions14d=sponsored_brand_dict.get('attributedConversions14d'),
             AttributedConversions14dSameSKU=sponsored_brand_dict.get('attributedConversions14dSameSKU'),
-            AttributedOrdersNewToBrand14d=sponsored_brand_dict.get('attributedOrdersNewToBrand14d'),
-            AttributedOrdersNewToBrandPercentage14d=sponsored_brand_dict.get('attributedOrdersNewToBrandPercentage14d'),
-            AttributedOrderRateNewToBrand14d=sponsored_brand_dict.get('attributedOrderRateNewToBrand14d'),
-            AttributedSalesNewToBrand14d=sponsored_brand_dict.get('attributedSalesNewToBrand14d'),
-            AttributedSalesNewToBrandPercentage14d=sponsored_brand_dict.get('attributedSalesNewToBrandPercentage14d'),
-            AttributedUnitsOrderedNewToBrand14d=sponsored_brand_dict.get('attributedUnitsOrderedNewToBrand14d'),
-            AttributedUnitsOrderedNewToBrandPercentage14d=sponsored_brand_dict.get('attributedUnitsOrderedNewToBrandPercentage14d'),
-            UnitsSold14d=sponsored_brand_dict.get('unitsSold14d'),
-            Dpv14d=sponsored_brand_dict.get('dpv14d'),
+            Timestamp=datetime.now(),
+        )
+
+
+def create_sponsored_brand_video(sponsored_brand_video_dict):
+    if sponsored_brand_video_dict:
+        return SponsoredBrandVideo(
+            CampaignName=sponsored_brand_video_dict.get('campaignName'),
+            CampaignId=sponsored_brand_video_dict.get('campaignId'),
+            CampaignStatus=sponsored_brand_video_dict.get('campaignStatus'),
+            CampaignBudget=sponsored_brand_video_dict.get('campaignBudget'),
+            CampaignBudgetType=sponsored_brand_video_dict.get('campaignBudgetType'),
+            CampaignRuleBasedBudget=sponsored_brand_video_dict.get('campaignRuleBasedBudget'),
+            ApplicableBudgetRuleId=sponsored_brand_video_dict.get('applicableBudgetRuleId'),
+            ApplicableBudgetRuleName=sponsored_brand_video_dict.get('applicableBudgetRuleName'),
+            AdGroupName=sponsored_brand_video_dict.get('adGroupName'),
+            AdGroupId=sponsored_brand_video_dict.get('adGroupId'),
+            KeywordId=sponsored_brand_video_dict.get('keywordId'),
+            KeywordText=sponsored_brand_video_dict.get('keywordText'),
+            KeywordBid=sponsored_brand_video_dict.get('keywordBid'),
+            KeywordStatus=sponsored_brand_video_dict.get('keywordStatus'),
+            TargetId=sponsored_brand_video_dict.get('targetId'),
+            SearchTermImpressionRank=sponsored_brand_video_dict.get('searchTermImpressionRank'),
+            TargetingExpression=sponsored_brand_video_dict.get('targetingExpression'),
+            TargetingText=sponsored_brand_video_dict.get('targetingText'),
+            TargetingType=sponsored_brand_video_dict.get('targetingType'),
+            MatchType=sponsored_brand_video_dict.get('matchType'),
+            Impressions=sponsored_brand_video_dict.get('impressions'),
+            Clicks=sponsored_brand_video_dict.get('clicks'),
+            Cost=sponsored_brand_video_dict.get('cost'),
+            AttributedDetailPageViewsClicks14d=sponsored_brand_video_dict.get('attributedDetailPageViewsClicks14d'),
+            AttributedSales14d=sponsored_brand_video_dict.get('attributedSales14d'),
+            AttributedSales14dSameSKU=sponsored_brand_video_dict.get('attributedSales14dSameSKU'),
+            AttributedConversions14d=sponsored_brand_video_dict.get('attributedConversions14d'),
+            AttributedConversions14dSameSKU=sponsored_brand_video_dict.get('attributedConversions14dSameSKU'),
+            AttributedOrdersNewToBrand14d=sponsored_brand_video_dict.get('attributedOrdersNewToBrand14d'),
+            AttributedOrdersNewToBrandPercentage14d=sponsored_brand_video_dict.get('attributedOrdersNewToBrandPercentage14d'),
+            AttributedOrderRateNewToBrand14d=sponsored_brand_video_dict.get('attributedOrderRateNewToBrand14d'),
+            AttributedSalesNewToBrand14d=sponsored_brand_video_dict.get('attributedSalesNewToBrand14d'),
+            AttributedSalesNewToBrandPercentage14d=sponsored_brand_video_dict.get('attributedSalesNewToBrandPercentage14d'),
+            AttributedUnitsOrderedNewToBrand14d=sponsored_brand_video_dict.get('attributedUnitsOrderedNewToBrand14d'),
+            AttributedUnitsOrderedNewToBrandPercentage14d=sponsored_brand_video_dict.get('attributedUnitsOrderedNewToBrandPercentage14d'),
+            UnitsSold14d=sponsored_brand_video_dict.get('unitsSold14d'),
+            Dpv14d=sponsored_brand_video_dict.get('dpv14d'),
             Timestamp=datetime.now(),
         )
 

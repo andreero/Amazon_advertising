@@ -1,8 +1,8 @@
 from amz.metrics import ASINS_KEYWORDS_METRICS, ASINS_TARGETS_METRICS, KEYWORDS_METRICS, \
-    PRODUCT_ADS_METRICS, SPONSORED_BRANDS_METRICS, SPONSORED_DISPLAY_METRICS
+    PRODUCT_ADS_METRICS, SPONSORED_BRANDS_METRICS, SPONSORED_BRANDS_VIDEO_METRICS, SPONSORED_DISPLAY_METRICS
 from db.serializers import create_sp_asins_keywords, create_sp_asins_targets, create_sp_keywords, \
-    create_sp_product_ads, create_sponsored_brand, create_sponsored_display
-from db.models import SponsoredBrand, SponsoredDisplay, SponsoredProductsKeyword, \
+    create_sp_product_ads, create_sponsored_brand, create_sponsored_brand_video, create_sponsored_display
+from db.models import SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay, SponsoredProductsKeyword, \
     SponsoredProductsProductAds, SponsoredProductsAsinsKeyword, SponsoredProductsAsinsTarget
 
 report_types = {
@@ -42,6 +42,14 @@ report_types = {
         'serializer': create_sponsored_brand,
         'model': SponsoredBrand,
         'metrics': ','.join(SPONSORED_BRANDS_METRICS),
+    },
+    'SponsoredBrandsVideo': {
+        'interface_type': 'hsa',
+        'record_type': 'keywords',
+        'creativeType': 'video',
+        'serializer': create_sponsored_brand_video,
+        'model': SponsoredBrandVideo,
+        'metrics': ','.join(SPONSORED_BRANDS_VIDEO_METRICS),
     },
     'SponsoredDisplay': {
         'interface_type': 'sd',

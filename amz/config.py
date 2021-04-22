@@ -1,9 +1,9 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
+
 import dateparser
 
-
 MAX_REPORT_CREATION_RETRIES = 3
-MAX_POOL_WORKERS = 3
+MAX_POOL_WORKERS = 5
 REQUEST_TIMEOUTS_SECONDS = [5, 15, 15, 30, 30]+[60]*30
 
 
@@ -34,6 +34,8 @@ class AmazonConfig():
         self.AmzDeveloper_ClientSecret = AmzDeveloper_ClientSecret
         self.AmzAccount_API_Advert_RefreshToken = AmzAccount_API_Advert_RefreshToken
         self.ReportType = ReportType.replace(' ', '').split(',')
+        if 'SponsoredBrands' in self.ReportType:
+            self.ReportType.append('SponsoredBrandsVideo')
         if 'SponsoredProducts' in self.ReportType:
             self.ReportType.remove('SponsoredProducts')
             self.ReportType += ['SponsoredProductsKeywords',

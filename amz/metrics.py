@@ -165,6 +165,35 @@ SPONSORED_BRANDS_METRICS = [
     'dpv14d',
 ]
 
+SPONSORED_BRANDS_VIDEO_METRICS = [
+    'campaignName',
+    'campaignId',
+    'campaignStatus',
+    'campaignBudget',
+    'campaignBudgetType',
+    'campaignRuleBasedBudget',
+    'applicableBudgetRuleId',
+    'applicableBudgetRuleName',
+    'adGroupName',
+    'adGroupId',
+    'keywordId',
+    'keywordText',
+    'keywordBid',
+    'keywordStatus',
+    'targetId',
+    'targetingExpression',
+    'targetingText',
+    'targetingType',
+    'matchType',
+    'impressions',
+    'clicks',
+    'cost',
+    'attributedSales14d',
+    'attributedSales14dSameSKU',
+    'attributedConversions14d',
+    'attributedConversions14dSameSKU',
+]
+
 SPONSORED_DISPLAY_METRICS = [
     'campaignName',
     'campaignId',
