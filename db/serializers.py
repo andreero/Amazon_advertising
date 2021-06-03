@@ -107,7 +107,7 @@ def create_sp_keywords(keyword_dict):
 
 def create_sp_search_terms(search_term_dict):
     if search_term_dict:
-        return SponsoredProductsKeyword(
+        return SponsoredProductsSearchTerm(
             CampaignName=search_term_dict.get('campaignName'),
             CampaignId=search_term_dict.get('campaignId'),
             AdGroupName=search_term_dict.get('adGroupName'),
