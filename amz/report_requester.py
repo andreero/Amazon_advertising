@@ -148,18 +148,19 @@ def create_report_queue(amazon_config):
     report_dates = get_dates_between(amazon_config.ReportStartDate, amazon_config.ReportEndDate)
     for report_type in amazon_config.ReportType:
         for report_date in report_dates:
+            report_config = report_types[report_type]
             data = {
                 'reportDate': report_date.strftime('%Y%m%d'),
-                'metrics': report_types[report_type]['metrics']
+                'metrics': report_config['metrics']
             }
-            if 'campaignType' in report_types[report_type]:
-                data['campaignType'] = report_types[report_type]['campaignType']
-            if 'tactic' in report_types[report_type]:
-                data['tactic'] = report_types[report_type]['tactic']
-            if 'creativeType' in report_types[report_type]:
-                data['creativeType'] = report_types[report_type]['creativeType']
-            record_type = report_types[report_type]['record_type']
-            interface_type = report_types[report_type]['interface_type']
+
+            optional_fields = ['campaignType', 'tactic', 'creativeType', 'segment']
+            for field in optional_fields:
+                if field in report_config:
+                    data[field] = report_config[field]
+
+            record_type = report_config['record_type']
+            interface_type = report_config['interface_type']
             report = Report(
                 report_type=report_type,
                 report_date=report_date,

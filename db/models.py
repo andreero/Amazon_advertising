@@ -132,6 +132,52 @@ class SponsoredProductsKeyword(Base):
     Timestamp = Column(DateTime(timezone=True))
 
 
+class SponsoredProductsSearchTerm(Base):
+    __tablename__ = 'amz_adv_sponsored_products_search_term'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    AmzAccount_ID_Internal = Column(String(255), index=True)
+    AmzAccount_Group = Column(String(255))
+    ReportDate = Column(Date, index=True)
+
+    CampaignName = Column(String(255))
+    CampaignId = Column(String(255))
+    AdGroupName = Column(String(255))
+    AdGroupId = Column(String(255))
+    Query = Column(Text)
+    KeywordId = Column(String(255))
+    KeywordText = Column(Text)
+    MatchType = Column(String(255))
+    Impressions = Column(Float)
+    Clicks = Column(Float)
+    Cost = Column(Float)
+    AttributedConversions1d = Column(Float)
+    AttributedConversions7d = Column(Float)
+    AttributedConversions14d = Column(Float)
+    AttributedConversions30d = Column(Float)
+    AttributedConversions1dSameSKU = Column(Float)
+    AttributedConversions7dSameSKU = Column(Float)
+    AttributedConversions14dSameSKU = Column(Float)
+    AttributedConversions30dSameSKU = Column(Float)
+    AttributedUnitsOrdered1d = Column(Float)
+    AttributedUnitsOrdered7d = Column(Float)
+    AttributedUnitsOrdered14d = Column(Float)
+    AttributedUnitsOrdered30d = Column(Float)
+    AttributedSales1d = Column(Float)
+    AttributedSales7d = Column(Float)
+    AttributedSales14d = Column(Float)
+    AttributedSales30d = Column(Float)
+    AttributedSales1dSameSKU = Column(Float)
+    AttributedSales7dSameSKU = Column(Float)
+    AttributedSales14dSameSKU = Column(Float)
+    AttributedSales30dSameSKU = Column(Float)
+    AttributedUnitsOrdered1dSameSKU = Column(Float)
+    AttributedUnitsOrdered7dSameSKU = Column(Float)
+    AttributedUnitsOrdered14dSameSKU = Column(Float)
+    AttributedUnitsOrdered30dSameSKU = Column(Float)
+    Timestamp = Column(DateTime(timezone=True))
+
+
 class SponsoredProductsProductAds(Base):
     __tablename__ = 'amz_adv_sponsored_products_product_ads'
 

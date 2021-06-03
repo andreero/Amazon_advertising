@@ -1,6 +1,6 @@
 from datetime import datetime
-from db.models import SponsoredProductsAsinsKeyword, SponsoredProductsAsinsTarget, \
-    SponsoredProductsKeyword, SponsoredProductsProductAds, SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay
+from db.models import SponsoredProductsAsinsKeyword, SponsoredProductsAsinsTarget, SponsoredProductsKeyword, \
+    SponsoredProductsSearchTerm, SponsoredProductsProductAds, SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay
 
 
 def create_sp_asins_keywords(asins_keyword_dict):
@@ -101,6 +101,48 @@ def create_sp_keywords(keyword_dict):
             AttributedUnitsOrdered7dSameSKU=keyword_dict.get('attributedUnitsOrdered7dSameSKU'),
             AttributedUnitsOrdered14dSameSKU=keyword_dict.get('attributedUnitsOrdered14dSameSKU'),
             AttributedUnitsOrdered30dSameSKU=keyword_dict.get('attributedUnitsOrdered30dSameSKU'),
+            Timestamp=datetime.now(),
+        )
+
+
+def create_sp_search_terms(search_term_dict):
+    if search_term_dict:
+        return SponsoredProductsKeyword(
+            CampaignName=search_term_dict.get('campaignName'),
+            CampaignId=search_term_dict.get('campaignId'),
+            AdGroupName=search_term_dict.get('adGroupName'),
+            AdGroupId=search_term_dict.get('adGroupId'),
+            Query=search_term_dict.get('query'),
+            KeywordId=search_term_dict.get('keywordId'),
+            KeywordText=search_term_dict.get('keywordText'),
+            MatchType=search_term_dict.get('matchType'),
+            Impressions=search_term_dict.get('impressions'),
+            Clicks=search_term_dict.get('clicks'),
+            Cost=search_term_dict.get('cost'),
+            AttributedConversions1d=search_term_dict.get('attributedConversions1d'),
+            AttributedConversions7d=search_term_dict.get('attributedConversions7d'),
+            AttributedConversions14d=search_term_dict.get('attributedConversions14d'),
+            AttributedConversions30d=search_term_dict.get('attributedConversions30d'),
+            AttributedConversions1dSameSKU=search_term_dict.get('attributedConversions1dSameSKU'),
+            AttributedConversions7dSameSKU=search_term_dict.get('attributedConversions7dSameSKU'),
+            AttributedConversions14dSameSKU=search_term_dict.get('attributedConversions14dSameSKU'),
+            AttributedConversions30dSameSKU=search_term_dict.get('attributedConversions30dSameSKU'),
+            AttributedUnitsOrdered1d=search_term_dict.get('attributedUnitsOrdered1d'),
+            AttributedUnitsOrdered7d=search_term_dict.get('attributedUnitsOrdered7d'),
+            AttributedUnitsOrdered14d=search_term_dict.get('attributedUnitsOrdered14d'),
+            AttributedUnitsOrdered30d=search_term_dict.get('attributedUnitsOrdered30d'),
+            AttributedSales1d=search_term_dict.get('attributedSales1d'),
+            AttributedSales7d=search_term_dict.get('attributedSales7d'),
+            AttributedSales14d=search_term_dict.get('attributedSales14d'),
+            AttributedSales30d=search_term_dict.get('attributedSales30d'),
+            AttributedSales1dSameSKU=search_term_dict.get('attributedSales1dSameSKU'),
+            AttributedSales7dSameSKU=search_term_dict.get('attributedSales7dSameSKU'),
+            AttributedSales14dSameSKU=search_term_dict.get('attributedSales14dSameSKU'),
+            AttributedSales30dSameSKU=search_term_dict.get('attributedSales30dSameSKU'),
+            AttributedUnitsOrdered1dSameSKU=search_term_dict.get('attributedUnitsOrdered1dSameSKU'),
+            AttributedUnitsOrdered7dSameSKU=search_term_dict.get('attributedUnitsOrdered7dSameSKU'),
+            AttributedUnitsOrdered14dSameSKU=search_term_dict.get('attributedUnitsOrdered14dSameSKU'),
+            AttributedUnitsOrdered30dSameSKU=search_term_dict.get('attributedUnitsOrdered30dSameSKU'),
             Timestamp=datetime.now(),
         )
 
