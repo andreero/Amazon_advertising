@@ -40,6 +40,7 @@ class AmazonConfig():
             self.ReportType.remove('SponsoredProducts')
             self.ReportType += ['SponsoredProductsKeywords',
                                 'SponsoredProductsSearchTerms',
+                                'SponsoredProductsTargets',
                                 'SponsoredProductsProductAds',
                                 'SponsoredProductsAsinsKeywords',
                                 'SponsoredProductsAsinsTargets']
