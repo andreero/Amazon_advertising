@@ -1,10 +1,10 @@
 from amz.metrics import ASINS_KEYWORDS_METRICS, ASINS_TARGETS_METRICS, KEYWORDS_METRICS, TARGETS_METRICS, \
     PRODUCT_ADS_METRICS, SPONSORED_BRANDS_METRICS, SPONSORED_BRANDS_VIDEO_METRICS, SPONSORED_DISPLAY_METRICS
 from db.serializers import create_sp_asins_keywords, create_sp_asins_targets, create_sp_keywords, \
-    create_sp_search_terms, create_sp_targets, create_sp_product_ads, create_sponsored_brand, \
+    create_sp_search_term_keywords, create_sp_search_term_targets, create_sp_product_ads, create_sponsored_brand, \
     create_sponsored_brand_video, create_sponsored_display
 from db.models import SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay, SponsoredProductsKeyword, \
-    SponsoredProductsSearchTerm, SponsoredProductsTarget, SponsoredProductsProductAds, SponsoredProductsAsinsKeyword, \
+    SponsoredProductsSearchTermTarget, SponsoredProductsSearchTermKeyword, SponsoredProductsProductAds, SponsoredProductsAsinsKeyword, \
     SponsoredProductsAsinsTarget
 
 report_types = {
@@ -31,20 +31,20 @@ report_types = {
         'model': SponsoredProductsKeyword,
         'metrics': ','.join(KEYWORDS_METRICS),
     },
-    'SponsoredProductsSearchTerms': {
+    'SponsoredProductsSearchTermsKeywords': {
         'interface_type': 'sp',
         'record_type': 'keywords',
         'segment': 'query',
-        'serializer': create_sp_search_terms,
-        'model': SponsoredProductsSearchTerm,
+        'serializer': create_sp_search_term_keywords,
+        'model': SponsoredProductsSearchTermKeyword,
         'metrics': ','.join(KEYWORDS_METRICS),  # uses the same metrics as keyword report
     },
-    'SponsoredProductsTargets': {
+    'SponsoredProductsSearchTermsTargets': {
         'interface_type': 'sp',
         'record_type': 'targets',
         'segment': 'query',
-        'serializer': create_sp_targets,
-        'model': SponsoredProductsTarget,
+        'serializer': create_sp_search_term_targets,
+        'model': SponsoredProductsSearchTermTarget,
         'metrics': ','.join(TARGETS_METRICS),
     },
     'SponsoredProductsProductAds': {

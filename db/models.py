@@ -132,8 +132,8 @@ class SponsoredProductsKeyword(Base):
     Timestamp = Column(DateTime(timezone=True))
 
 
-class SponsoredProductsSearchTerm(Base):
-    __tablename__ = 'amz_adv_sponsored_products_search_term'
+class SponsoredProductsSearchTermKeyword(Base):
+    __tablename__ = 'amz_adv_sponsored_products_search_term_keyword'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     AmzAccount_ID_Internal = Column(String(255), index=True)
@@ -178,8 +178,8 @@ class SponsoredProductsSearchTerm(Base):
     Timestamp = Column(DateTime(timezone=True))
 
 
-class SponsoredProductsTarget(Base):
-    __tablename__ = 'amz_adv_sponsored_products_target'
+class SponsoredProductsSearchTermTarget(Base):
+    __tablename__ = 'amz_adv_sponsored_products_search_term_target'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     AmzAccount_ID_Internal = Column(String(255), index=True)
