@@ -141,7 +141,7 @@ class SponsoredProductsSearchTerm(Base):
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    CampaignId = Column(String(255))
+    CampaignId = Column(String(255), index=True)
     AdGroupName = Column(String(255))
     AdGroupId = Column(String(255))
     Query = Column(Text)
@@ -187,7 +187,7 @@ class SponsoredProductsTarget(Base):
     ReportDate = Column(Date, index=True)
 
     CampaignName = Column(String(255))
-    AampaignId = Column(String(255))
+    CampaignId = Column(String(255), index=True)
     AdGroupName = Column(String(255))
     AdGroupId = Column(String(255))
     TargetId = Column(String(255))
