@@ -42,6 +42,7 @@ report_types = {
     'SponsoredProductsTargets': {
         'interface_type': 'sp',
         'record_type': 'targets',
+        'segment': 'query',
         'serializer': create_sp_targets,
         'model': SponsoredProductsTarget,
         'metrics': ','.join(TARGETS_METRICS),

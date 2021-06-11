@@ -155,6 +155,7 @@ def create_sp_targets(targets_dict):
             CampaignId=targets_dict.get('campaignId'),
             AdGroupName=targets_dict.get('adGroupName'),
             AdGroupId=targets_dict.get('adGroupId'),
+            Query=targets_dict.get('query'),
             TargetId=targets_dict.get('targetId'),
             TargetingExpression=targets_dict.get('targetingExpression'),
             TargetingText=targets_dict.get('targetingText'),
