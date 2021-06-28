@@ -366,6 +366,6 @@ def create_sp_campaign(campaign_dict):
             DailyBudget=campaign_dict.get('dailyBudget'),
             StartDate=start_date,
             EndDate=end_date,
-            PremiumBidAdjustment=campaign_dict.get('campaignId'),
+            PremiumBidAdjustment=campaign_dict.get('premiumBidAdjustment'),
             Timestamp=datetime.now(),
         )
