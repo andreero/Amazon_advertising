@@ -35,7 +35,7 @@ def main():
             db_logger.exception('Failed to initialize from amazon config %s',
                                 amazon_config_dict.get('AmzAccount_ID_Internal'))
         else:
-            db_logger.info('Processing orders using amazon config %s', amazon_config.AmzAccount_ID_Internal)
+            db_logger.info('Processing reports using amazon config %s', amazon_config.AmzAccount_ID_Internal)
             process_reports(db_engine=engine, logger=db_logger, amazon_config=amazon_config)
 
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, DateTime, Text, Float
+from sqlalchemy import Column, Integer, String, Date, DateTime, Text, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -397,4 +397,24 @@ class SponsoredDisplay(Base):
     AttributedOrdersNewToBrand14d = Column(Float)
     AttributedSalesNewToBrand14d = Column(Float)
     AttributedUnitsOrderedNewToBrand14d = Column(Float)
+    Timestamp = Column(DateTime(timezone=True))
+
+
+class Campaign(Base):
+    __tablename__ = 'amz_adv_campaign'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    AmzAccount_ID_Internal = Column(String(255), index=True)
+    AmzAccount_Group = Column(String(255))
+
+    PortfolioId = Column(String(255))
+    CampaignId = Column(String(255), index=True)
+    CampaignName = Column(String(255))
+    CampaignType = Column(String(255))
+    TargetingType = Column(String(255))
+    State = Column(String(255))
+    DailyBudget = Column(Float)
+    StartDate = Column(Date)
+    EndDate = Column(Date)
+    PremiumBidAdjustment = Column(Boolean)
     Timestamp = Column(DateTime(timezone=True))

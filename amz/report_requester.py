@@ -12,6 +12,7 @@ from amz.advertising_api import AdvertisingApi
 from amz.config import AmazonConfig, MAX_POOL_WORKERS, MAX_REPORT_CREATION_RETRIES, REQUEST_TIMEOUTS_SECONDS
 from amz.regions import region_codes
 from amz.report_types import report_types
+from amz.campaigns import process_campaigns
 
 
 @dataclass
@@ -50,6 +51,9 @@ def get_valid_profile_ids(api_object, country_codes):
 
 
 def request_report(api_object, report: Report, logger):
+    """ Request the provided report from Amazon Advertising API
+        and periodically check creation status until it equals "SUCCESS".
+        Returns the id of successfully created report. """
     if api_object.last_refreshed_access_token <= time.time()-30*60:  # Refresh token if it's more than 30 minutes old
         api_object.do_refresh_token()
 
@@ -201,6 +205,9 @@ def process_reports(db_engine, logger, amazon_config: AmazonConfig):
                 api_object.profile_id = profile_id
                 logger.info(f'Using profile id {profile_id}.')
                 print(f'Using profile id {profile_id}.')
+
+                process_campaigns(api_object=api_object, db_engine=db_engine,
+                                  logger=logger, amazon_config=amazon_config)
 
                 report_queue = create_report_queue(amazon_config=amazon_config)
                 process_report_queue(

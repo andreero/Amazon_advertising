@@ -124,6 +124,41 @@ class AdvertisingApi(object):
                     'code': e.code,
                     'response': '{msg}: {details}'.format(msg=e.msg, details=e.read())}
 
+    def list_campaigns(self, data=None, campaign_type='sp'):
+        """
+        Retrieves a list of campaigns satisfying optional criteria.
+        :GET: /{campaignType}/campaigns
+        :param campaign_type: The campaignType to retrieve campaigns for ('sp' or 'hsa')
+          Defaults to 'sp'
+        :type campaign_type: string
+        :param data: Optional, search criteria containing the following
+            parameters.
+        data may contain the following optional parameters:
+        :param startIndex: 0-indexed record offset for the result set.
+            Defaults to 0.
+        :type startIndex: Integer
+        :param count: Number of records to include in the paged response.
+            Defaults to max page size.
+        :type count: Integer
+        :param campaignType: Restricts results to campaigns of a single
+            campaign type. Must be **sponsoredProducts**.
+        :type campaignType: String
+        :param stateFilter: Restricts results to campaigns with state within
+            the specified comma-separatedlist. Must be one of **enabled**,
+            **paused**, **archived**. Default behavior is to include all.
+        :param name: Restricts results to campaigns with the specified name.
+        :type name: String
+        :param campaignFilterId: Restricts results to campaigns specified in
+            comma-separated list.
+        :type campaignFilterId: String
+        :returns:
+            :200: Success. list of campaign
+            :401: Unauthorized
+        """
+        interface = '{}/campaigns' .format(campaign_type)
+
+        return self._operation(interface, data)
+
     def get_profiles(self):
         """
         Retrieves profiles associated with an auth token.

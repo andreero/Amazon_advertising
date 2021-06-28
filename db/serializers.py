@@ -1,7 +1,7 @@
 from datetime import datetime
 from db.models import SponsoredProductsAsinsKeyword, SponsoredProductsAsinsTarget, SponsoredProductsKeyword, \
     SponsoredProductsSearchTermKeyword, SponsoredProductsSearchTermTarget, SponsoredProductsProductAds, \
-    SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay
+    SponsoredBrand, SponsoredBrandVideo, SponsoredDisplay, Campaign
 
 
 def create_sp_asins_keywords(asins_keyword_dict):
@@ -346,5 +346,26 @@ def create_sponsored_display(sponsored_display_dict):
             AttributedOrdersNewToBrand14d=sponsored_display_dict.get('attributedOrdersNewToBrand14d'),
             AttributedSalesNewToBrand14d=sponsored_display_dict.get('attributedSalesNewToBrand14d'),
             AttributedUnitsOrderedNewToBrand14d=sponsored_display_dict.get('attributedUnitsOrderedNewToBrand14d'),
+            Timestamp=datetime.now(),
+        )
+
+
+def create_sp_campaign(campaign_dict):
+    if campaign_dict:
+        start_date_string = campaign_dict.get('startDate')
+        end_date_string = campaign_dict.get('endDate')
+        start_date = datetime.strptime(start_date_string, '%Y%m%d').date() if start_date_string else None
+        end_date = datetime.strptime(end_date_string, '%Y%m%d').date() if end_date_string else None
+        return Campaign(
+            PortfolioId=campaign_dict.get('portfolioId'),
+            CampaignId=campaign_dict.get('campaignId'),
+            CampaignName=campaign_dict.get('name'),
+            CampaignType=campaign_dict.get('campaignType'),
+            TargetingType=campaign_dict.get('targetingType'),
+            State=campaign_dict.get('state'),
+            DailyBudget=campaign_dict.get('dailyBudget'),
+            StartDate=start_date,
+            EndDate=end_date,
+            PremiumBidAdjustment=campaign_dict.get('campaignId'),
             Timestamp=datetime.now(),
         )
