@@ -28,8 +28,8 @@ def process_campaigns(api_object, db_engine, logger, amazon_config):
         response = api_object.list_campaigns()
         if response['success']:
             campaigns = json.loads(response['response'])
-            logger.debug(f'Downloaded the campaigns list with {len(campaigns)} records')
-            print(f'Downloaded the campaigns list with {len(campaigns)} records')
+            logger.debug(f'Downloaded campaigns list with {len(campaigns)} records')
+            print(f'Downloaded campaigns list with {len(campaigns)} records')
             save_campaigns_to_db(campaigns=campaigns, db_engine=db_engine, logger=logger, amazon_config=amazon_config)
             return
         else:
